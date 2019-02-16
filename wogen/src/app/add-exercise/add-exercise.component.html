@@ -1,0 +1,9 @@
+<p>Add your exercise to the pool</p>
+<input placeholder="name" #name required>
+<input placeholder="area" #area required>
+<input placeholder="reps for emom" #emom required>
+<input placeholder="reps for amrap" #amrap required>
+<input placeholder="reps for strength training" #strength required>
+<input placeholder="type" #type required>
+
+<button mat-button (click)="createExercise(name.value, area.value, emom.value, amrap.value, strength.value, type.value)">Add exercise</button>
