@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { MatInputModule, MatButtonModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { MatInputModule, MatButtonModule } from '@angular/material';
     BrowserModule,
     MatInputModule,
     MatButtonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

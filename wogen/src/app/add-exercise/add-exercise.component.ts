@@ -1,3 +1,4 @@
+import { ExerciseService } from './../services/exercises.service';
 import { Exercise } from './../exercise';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddExerciseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
   }
@@ -26,7 +27,7 @@ export class AddExerciseComponent implements OnInit {
 
     //service to post exercise to database
     console.log(ex.name, ex.area, ex.emom, ex.amrap, ex.strength, ex.type);
-
+    this.exerciseService.post(ex);
   }
 
 }
