@@ -15,8 +15,8 @@ namespace api.Services
         public ExerciseService(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("exerciseDB"));
-            var database = client.GetDatabase("exerciseDB");
-            _exercises = database.GetCollection<Exercise>("Exercises");
+            var database = client.GetDatabase("ExerciseDB");
+            _exercises = database.GetCollection<Exercise>("exercises");
         }
 
         public List<Exercise> Get()
