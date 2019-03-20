@@ -9,9 +9,9 @@ import { Exercise } from '../exercise';
 export class ExerciseService {
   constructor(private client: HttpClient) {}
 
-  public get(): any {
+  public get(): Observable<any> {
     const url = 'https://localhost:5001/api/exercises';
-    return this.client.get<Array<Exercise>>(url);
+    return this.client.get<Array<any>>(url);
   }
 
   public post(exercise: Exercise): Observable<any> {

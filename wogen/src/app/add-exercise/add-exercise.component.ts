@@ -25,9 +25,9 @@ export class AddExerciseComponent implements OnInit {
     ex.strength = strength;
     ex.type = type;
 
-    //service to post exercise to database
+    // service to post exercise to database
     console.log(ex.name, ex.area, ex.emom, ex.amrap, ex.strength, ex.type);
-    this.exerciseService.post(ex);
+    this.exerciseService.post(ex).subscribe();
   }
 
 }
