@@ -26,7 +26,6 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:length(24)}", Name = "GetExercise")]
-        //[HttpGet]
         public ActionResult<Exercise> Get(string id)
         {
             var exercise = _exerciseService.Get(id);
