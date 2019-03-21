@@ -1,96 +1,35 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
+/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat-core();
-$eurofins-blue: (
-    50 : #e4e7f0,
-    100 : #bbc2da,
-    200 : #8e9ac1,
-    300 : #6072a8,
-    400 : #3e5396,
-    500 : #1c3583,
-    600 : #19307b,
-    700 : #142870,
-    800 : #112266,
-    900 : #091653,
-    A100 : #8897ff,
-    A200 : #556aff,
-    A400 : #223eff,
-    A700 : #0827ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-$eurofins-orange: (
-    50 : #fdefe2,
-    100 : #fad7b6,
-    200 : #f7bd85,
-    300 : #f4a354,
-    400 : #f18f30,
-    500 : #ef7b0b,
-    600 : #ed730a,
-    700 : #eb6808,
-    800 : #e85e06,
-    900 : #e44b03,
-    A100 : #ffffff,
-    A200 : #ffe2d8,
-    A400 : #ffbda5,
-    A700 : #ffaa8b,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($eurofins-blue);
-$app-accent: mat-palette($eurofins-orange);
-// The warn palette is optional (defaults to red).
-$app-warn: mat-palette($mat-red);
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($app-theme);
-/* You can add global styles to this file, and also import other style files */
 
-$primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$accent-light: mat-color($app-accent, A200);
-$warn: mat-color($app-warn);
+$custom-primary: mat-palette($mat-indigo);
+$custom-accent:  mat-palette($mat-green);
+$custom-theme: mat-dark-theme($custom-primary, $custom-accent);
+@include angular-material-theme($custom-theme);
 
-body { margin: 0; height: 100vh; background-color: #FFF; font-family: 'Roboto'}
+.snackbar-success {
+  button {
+    color: green;
+  }
+  color: white;
+  background-color: #222222;
+}
+
+.snackbar-failed {
+    button {
+      color: red;
+      }
+    color: white;
+    background-color: #222222;
+  }
+
+
+body {
+    background-color: black;
+    color: white;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
 
 .snackbar-success {
   button {
