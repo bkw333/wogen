@@ -18,11 +18,11 @@ namespace api.signalR
         }
         public async Task SendMessage(string message, Exercise exercise)
         {
-            if (exercise == null)
-            {
-                var emptyExercise = new Exercise();
-                await _exerciseHubContext.Clients.All.SendAsync(message, emptyExercise);
-            }
+            //if (exercise == null)
+            //{
+            //    var emptyExercise = new Exercise();
+            //    await _exerciseHubContext.Clients.All.SendAsync(message, emptyExercise);
+            //}
             await _exerciseHubContext.Clients.All.SendAsync(message, exercise);
         }
     }

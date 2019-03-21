@@ -37,7 +37,8 @@ namespace api.Controllers
 
             if (exercise == null)
             {
-                await _signalrHandler.SendMessage("OnNotFound", null);
+                var emptyExercise = new Exercise();
+                await _signalrHandler.SendMessage("OnNotFound", emptyExercise);
                 return NotFound();
             }
             
@@ -61,7 +62,8 @@ namespace api.Controllers
 
             if (exercise == null)
             {
-                await _signalrHandler.SendMessage("OnNotFound", exercise);
+                var emptyExercise = new Exercise();
+                await _signalrHandler.SendMessage("OnNotFound", emptyExercise);
                 return NotFound();
             }
 
@@ -76,7 +78,8 @@ namespace api.Controllers
             var exercise = _exerciseService.Get(id);
             if (exercise == null)
             {
-                await _signalrHandler.SendMessage("OnNotFound", exercise);
+                var emptyExercise = new Exercise();
+                await _signalrHandler.SendMessage("OnNotFound", emptyExercise);
                 return NotFound();
             }
             _exerciseService.Remove(exercise.Id);
