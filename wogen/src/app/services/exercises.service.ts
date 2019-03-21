@@ -17,13 +17,11 @@ export class ExerciseService {
   }
 
   public post(exercise: Exercise): Observable<any> {
-    console.log('sending Exercise to api/db', exercise.name, exercise.type);
     this.exercises.push(exercise);
     return this.client.post(this.url, exercise);
   }
 
   public delete(id: string): void {
-    console.log(`deleting ${id}`);
     const url = `${this.url}/?id=${id}`;
     this.client.delete(url).subscribe(data => {});
   }

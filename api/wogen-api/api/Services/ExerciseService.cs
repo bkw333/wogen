@@ -29,6 +29,11 @@ namespace api.Services
             return _exercises.Find<Exercise>(exercise => exercise.Id == id).FirstOrDefault();
         }
 
+        public Exercise GetCreatedExercise(string name)
+        {
+            return _exercises.Find<Exercise>(exercise => exercise.Name == name).FirstOrDefault();
+        }
+
         public Exercise Create(Exercise exercise)
         {
             _exercises.InsertOne(exercise);

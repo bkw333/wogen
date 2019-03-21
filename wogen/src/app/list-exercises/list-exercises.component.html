@@ -7,7 +7,7 @@
 <input placeholder="reps for strength training" #strength required>
 <input placeholder="type" #type required>
 
-<button mat-button (click)="createExercise(name.value, area.value, emom.value, amrap.value, strength.value, type.value)">Add exercise</button>
+<button mat-button (click)="createExercise(name.value, area.value, intensity.value ,emom.value, amrap.value, strength.value, type.value)">Add exercise</button>
 
 
 <h1 *ngFor="let e of exercises">

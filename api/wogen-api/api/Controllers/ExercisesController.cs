@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Models;
+using api.signalR;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace api.Controllers
 {
@@ -13,10 +15,13 @@ namespace api.Controllers
     public class ExercisesController : ControllerBase
     {
         private readonly ExerciseService _exerciseService;
+        private readonly SignalrHandler _signalrHandler;
 
-        public ExercisesController(ExerciseService exercisesService)
+        public ExercisesController(ExerciseService exercisesService, SignalrHandler signalrHandler)
         {
             _exerciseService = exercisesService;
+            _signalrHandler = signalrHandler;
+
         }
 
         [HttpGet]
@@ -26,49 +31,56 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:length(24)}", Name = "GetExercise")]
-        public ActionResult<Exercise> Get(string id)
+        public async Task<ActionResult<Exercise>> Get(string id)
         {
             var exercise = _exerciseService.Get(id);
 
             if (exercise == null)
             {
+                await _signalrHandler.SendMessage("OnNotFound", null);
                 return NotFound();
             }
-
+            
             return exercise;
         }
 
         [HttpPost]
-        public ActionResult<Exercise> Create(Exercise exercise)
+        public async Task<ActionResult<Exercise>> Create(Exercise exercise)
         {
             _exerciseService.Create(exercise);
-
-            return CreatedAtRoute("GetExercise", new {id = exercise.Id.ToString()}, exercise);
+            var result = CreatedAtRoute("GetExercise", new {id = exercise.Id.ToString()}, exercise);
+            var createdExercise = _exerciseService.GetCreatedExercise(exercise.Name);
+            await _signalrHandler.SendMessage("OnCreated", createdExercise);
+            return result;
         }
 
         [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, Exercise exerciseIn)
+        public async Task<IActionResult> Update(string id, Exercise exerciseIn)
         {
             var exercise = _exerciseService.Get(id);
 
             if (exercise == null)
             {
+                await _signalrHandler.SendMessage("OnNotFound", exercise);
                 return NotFound();
             }
 
+            await _signalrHandler.SendMessage("OnUpdated", exercise);
             _exerciseService.Update(id, exerciseIn);
             return NoContent();
         }
 
         [HttpDelete]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var exercise = _exerciseService.Get(id);
             if (exercise == null)
             {
+                await _signalrHandler.SendMessage("OnNotFound", exercise);
                 return NotFound();
             }
             _exerciseService.Remove(exercise.Id);
+            await _signalrHandler.SendMessage("OnDeleted", exercise);
 
             return NoContent();
         }
