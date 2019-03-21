@@ -48,10 +48,9 @@ namespace api.Controllers
         [HttpPost]
         public async Task<ActionResult<Exercise>> Create(Exercise exercise)
         {
-            _exerciseService.Create(exercise);
+            exercise = _exerciseService.Create(exercise);
             var result = CreatedAtRoute("GetExercise", new {id = exercise.Id.ToString()}, exercise);
-            var createdExercise = _exerciseService.GetCreatedExercise(exercise.Name);
-            await _signalrHandler.SendMessage("OnCreated", createdExercise);
+            await _signalrHandler.SendMessage("OnCreated", exercise);
             return result;
         }
 

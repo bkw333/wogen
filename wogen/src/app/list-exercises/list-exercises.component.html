@@ -1,4 +1,5 @@
 <p>Add your exercise to the pool</p>
+
 <input placeholder="name" #name required>
 <input placeholder="area" #area required>
 <input placeholder="intensity" #intensity required>
@@ -10,6 +11,6 @@
 <button mat-button (click)="createExercise(name.value, area.value, intensity.value ,emom.value, amrap.value, strength.value, type.value)">Add exercise</button>
 
 
-<h1 *ngFor="let e of exercises">
-  Name: {{e.name}}, Intensität: {{e.intensity}} <button (click)="this.deleteExercise(e)">Delete</button> <button (click)="this.updateExercise(e)">Update</button>
-</h1>
+<h3 *ngFor="let e of exercises">
+  Name: {{e.name}}, Intensität: {{e.intensity}} <button mat-button (click)="this.deleteExercise(e)">Delete</button>   <button mat-button (click)="this.updateExercise(e)">Update</button>
+</h3>
