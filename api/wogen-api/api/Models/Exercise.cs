@@ -18,20 +18,18 @@ namespace api.Models
 
         [BsonElement("Area")]
         public int Area { get; set; }
-        [BsonElement("Intensity")]
-        public int Intensity { get; set; }
 
-        [BsonElement("EMOM")]
-        public int EMOM { get; set; }
+        [BsonElement("Beginner")]
+        public int Beginner { get; set; }
 
-        [BsonElement("AMRAP")]
-        public int AMRAP { get; set; }
+        [BsonElement("Advanced")]
+        public int Advanced { get; set; }
+        
+        [BsonElement("Extreme")]
+        public int Extreme { get; set; }
 
-        [BsonElement("Strength")]
-        public int Strength { get; set; }
-
-        [BsonElement("Type")]
-        public int Type { get; set; }
+        [BsonElement("Equipment")]
+        public int Equipment { get; set; }
     }
 
 

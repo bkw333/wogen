@@ -12,22 +12,22 @@ export class ExerciseService {
   constructor(private client: HttpClient) { }
   url = 'https://localhost:5001/api/exercises';
 
-  public get(): Observable<any> {
-    return this.client.get<Array<any>>(this.url);
+  public get(type: string): Observable<any> {
+    return this.client.get<Array<any>>(this.url, type);
   }
 
-  public post(exercise: Exercise): Observable<any> {
-    this.exercises.push(exercise);
-    return this.client.post(this.url, exercise);
+  public post(type: string, exercise: Exercise): Observable<any> {
+    this.exercises.push(type, exercise);
+    return this.client.post(this.url, type, exercise);
   }
 
-  public delete(id: string): void {
-    const url = `${this.url}/?id=${id}`;
+  public delete(type: string, id: string): void {
+    const url = `${this.url}/?type=${type}&id=${id}`;
     this.client.delete(url).subscribe(data => {});
   }
 
-  public update(id: string): any {
-    console.log(`updating ${id}`);
+  public update(type: string, id: string): any {
+    console.log(`updating ${type}: ${id}`);
   }
 
 }

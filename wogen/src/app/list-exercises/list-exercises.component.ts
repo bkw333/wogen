@@ -6,6 +6,11 @@ import { Observable } from 'rxjs';
 import { delay } from 'q';
 import { MatSnackBar } from '@angular/material';
 
+export interface TrainingsType {
+  value: number;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-list-exercises',
   templateUrl: './list-exercises.component.html',
@@ -14,6 +19,7 @@ import { MatSnackBar } from '@angular/material';
 export class ListExercisesComponent implements OnInit {
   canSendMessage: boolean;
   lastCreatedExercise: Exercise;
+  trainingstype = "EMOM";
 
   constructor(
     private exerciseService: ExerciseService,
@@ -30,30 +36,30 @@ export class ListExercisesComponent implements OnInit {
   }
 
   loadExercises(): void {
-    this.exerciseService.get().subscribe(data => {
+    console.log(this.trainingstype)
+    this.exerciseService.get(this.trainingstype).subscribe(data => {
       this.exercises = data;
       console.log(data);
     });
   }
 
-  createExercise(name: string, area: number, intensity: number, emom: number, amrap: number, strength: number, type: number) {
+  createExercise(name: string, area: number, beginner: number, advanced: number, extreme: number, equipment: number) {
     const ex = new Exercise;
     ex.name = name;
     ex.area = area;
-    ex.intensity = intensity;
-    ex.emom = emom;
-    ex.amrap = amrap;
-    ex.strength = strength;
-    ex.type = type;
-    this.exerciseService.post(ex).subscribe();
+    ex.beginner = beginner;
+    ex.advanced = advanced;
+    ex.extreme = extreme;
+    ex.equipment = equipment;
+    this.exerciseService.post(this.trainingstype, ex).subscribe();
   }
 
   updateExercise(exercise: Exercise): void {
-    this.exerciseService.update(exercise.id);
+    this.exerciseService.update(this.trainingstype, exercise.id);
   }
 
   deleteExercise(exercise: Exercise): void {
-    this.exerciseService.delete(exercise.id);
+    this.exerciseService.delete(this.trainingstype, exercise.id);
     const index = this.exercises.indexOf(exercise);
     this.exercises.splice(index, 1);
   }

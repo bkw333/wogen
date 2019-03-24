@@ -25,15 +25,15 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Exercise>> Get()
+        public ActionResult<List<Exercise>> Get(string type)
         {
-            return _exerciseService.Get();
+            return _exerciseService.Get(type);
         }
 
         [HttpGet("{id:length(24)}", Name = "GetExercise")]
-        public async Task<ActionResult<Exercise>> Get(string id)
+        public async Task<ActionResult<Exercise>> Get(string type, string id)
         {
-            var exercise = _exerciseService.Get(id);
+            var exercise = _exerciseService.Get(type, id);
 
             if (exercise == null)
             {
@@ -46,18 +46,18 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Exercise>> Create(Exercise exercise)
+        public async Task<ActionResult<Exercise>> Create(string type, Exercise exercise)
         {
-            exercise = _exerciseService.Create(exercise);
-            var result = CreatedAtRoute("GetExercise", new {id = exercise.Id.ToString()}, exercise);
+            exercise = _exerciseService.Create(type, exercise);
+            var result = CreatedAtRoute("GetExercise", type, new {id = exercise.Id.ToString()}, exercise);
             await _signalrHandler.SendMessage("OnCreated", exercise);
             return result;
         }
 
         [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> Update(string id, Exercise exerciseIn)
+        public async Task<IActionResult> Update(string type, string id, Exercise exerciseIn)
         {
-            var exercise = _exerciseService.Get(id);
+            var exercise = _exerciseService.Get(type, id);
 
             if (exercise == null)
             {
@@ -67,21 +67,21 @@ namespace api.Controllers
             }
 
             await _signalrHandler.SendMessage("OnUpdated", exercise);
-            _exerciseService.Update(id, exerciseIn);
+            _exerciseService.Update(type, id, exerciseIn);
             return NoContent();
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string type, string id)
         {
-            var exercise = _exerciseService.Get(id);
+            var exercise = _exerciseService.Get(type, id);
             if (exercise == null)
             {
                 var emptyExercise = new Exercise();
                 await _signalrHandler.SendMessage("OnNotFound", emptyExercise);
                 return NotFound();
             }
-            _exerciseService.Remove(exercise.Id);
+            _exerciseService.Remove(type, exercise.Id);
             await _signalrHandler.SendMessage("OnDeleted", exercise);
 
             return NoContent();

@@ -1,16 +1,24 @@
 <p>Add your exercise to the pool</p>
 
+<mat-formfield>
+  <mat-label>Trainingstyp</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let type of types" [value]="type.value">
+      {{type.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-formfield>
+
 <input placeholder="name" #name required>
 <input placeholder="area" #area required>
-<input placeholder="intensity" #intensity required>
-<input placeholder="reps for emom" #emom required>
-<input placeholder="reps for amrap" #amrap required>
-<input placeholder="reps for strength training" #strength required>
-<input placeholder="type" #type required>
+<input placeholder="reps for beginner" #beginner required>
+<input placeholder="reps for advanced" #advanced required>
+<input placeholder="reps for extreme" #extreme required>
+<input placeholder="equipment" #equipment required>
 
-<button mat-button (click)="createExercise(name.value, area.value, intensity.value ,emom.value, amrap.value, strength.value, type.value)">Add exercise</button>
+<button mat-button (click)="createExercise(name.value, area.value, beginner.value, advanced.value, extreme.value, equipment.value)">Add exercise</button>
 
 
 <h3 *ngFor="let e of exercises">
-  Name: {{e.name}}, Intensität: {{e.intensity}} <button mat-button (click)="this.deleteExercise(e)">Delete</button>   <button mat-button (click)="this.updateExercise(e)">Update</button>
+  Name: {{e.name}}, Beginner: {{e.beginner}}, Advanced: {{e.advanced}}, Extreme: {{e.extreme}}, Equipment: {{e.equipment}} <button mat-button (click)="this.deleteExercise(e)">Delete</button>   <button mat-button (click)="this.updateExercise(e)">Update</button>
 </h3>
