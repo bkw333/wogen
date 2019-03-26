@@ -23,7 +23,8 @@
   </h3>
 </mat-card>
 
-<h2>Give me something to do!</h2><button mat-button (click)="GetWorkout()">GET SOME!</button>
+<h2>Give me something to do!</h2><button mat-button (click)="GetWorkout(wotype.value)">GET SOME!</button>
+<input placeholder="type" #wotype required>
 
 <h1 *ngIf="randomWorkout">Workout: EMOM - 20 Minutes</h1>
-<h2 *ngFor="let e of randomWorkout">{{e.name}}: | Easy: {{e.easy}} Reps | Medium: {{e.medium}} Reps | Extreme: {{e.extreme}} Reps |</h2>
+<h2 *ngFor="let e of randomWorkout">{{e.type}}-{{e.name}}: | Easy: {{e.easy}} Reps | Medium: {{e.medium}} Reps | Extreme: {{e.extreme}} Reps |</h2>

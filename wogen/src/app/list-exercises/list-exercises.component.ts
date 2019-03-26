@@ -49,8 +49,10 @@ export class ListExercisesComponent implements OnInit {
     this.exerciseService.post(ex).subscribe();
   }
 
-  GetWorkout() {
-    const type = 1; // 1 = EMOM, 2 = AMRAP, 3 = Strength
+  GetWorkout(type: number) {
+    if (!type) {
+      type = 1;
+    }
     const time = 20;
     const rounds = 4;
     const exercises = time / rounds;
