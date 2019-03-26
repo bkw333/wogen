@@ -13,25 +13,27 @@ namespace api.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        [BsonElement("Type")]
+        public int Type { get; set; }
+
         [BsonElement("Name")]
         public string Name { get; set; }
 
         [BsonElement("Area")]
         public int Area { get; set; }
-        [BsonElement("Intensity")]
-        public int Intensity { get; set; }
+        [BsonElement("Easy")]
+        public int Easy { get; set; }
 
-        [BsonElement("EMOM")]
-        public int EMOM { get; set; }
+        [BsonElement("Medium")]
+        public int Medium { get; set; }
 
-        [BsonElement("AMRAP")]
-        public int AMRAP { get; set; }
+        [BsonElement("Extreme")]
+        public int Extreme { get; set; }
 
-        [BsonElement("Strength")]
-        public int Strength { get; set; }
+        [BsonElement("Equipment")]
+        public int Equipment { get; set; }
 
-        [BsonElement("Type")]
-        public int Type { get; set; }
+        
     }
 
 

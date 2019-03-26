@@ -1,10 +1,10 @@
 export class Exercise {
   id: string;
+  type: string;
   name: string;
   area: number;
-  intensity: number;
-  emom: number;
-  amrap: number;
-  strength: number;
-  type: number;
+  easy: number;
+  medium: number;
+  extreme: number;
+  equipment: number;
 }

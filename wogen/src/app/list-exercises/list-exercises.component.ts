@@ -36,15 +36,15 @@ export class ListExercisesComponent implements OnInit {
     });
   }
 
-  createExercise(name: string, area: number, intensity: number, emom: number, amrap: number, strength: number, type: number) {
+  createExercise(type: string, name: string, area: number, easy: number, medium: number, extreme: number, equipment: number) {
     const ex = new Exercise;
+    ex.type = type;
     ex.name = name;
     ex.area = area;
-    ex.intensity = intensity;
-    ex.emom = emom;
-    ex.amrap = amrap;
-    ex.strength = strength;
-    ex.type = type;
+    ex.easy = easy;
+    ex.medium = medium;
+    ex.extreme = extreme;
+    ex.equipment = equipment;
     this.exerciseService.post(ex).subscribe();
   }
 
