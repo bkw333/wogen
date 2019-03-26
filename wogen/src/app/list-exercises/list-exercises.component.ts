@@ -24,6 +24,7 @@ export class ListExercisesComponent implements OnInit {
   }
 
   exercises: Array<any>;
+  randomWorkout: any;
 
   ngOnInit() {
     this.loadExercises();
@@ -46,6 +47,26 @@ export class ListExercisesComponent implements OnInit {
     ex.extreme = extreme;
     ex.equipment = equipment;
     this.exerciseService.post(ex).subscribe();
+  }
+
+  GetWorkout() {
+    const type = 1; // 1 = EMOM, 2 = AMRAP, 3 = Strength
+    const time = 20;
+    const rounds = 4;
+    const exercises = time / rounds;
+    const filteredExercises = this.GetExercises(type);
+    const workout = new Array<Exercise>();
+
+    for (let i = 0; i < exercises - 1; i++) {
+      const x = Math.floor(Math.random() * filteredExercises.length + 0);
+      workout.push(filteredExercises[x]);
+    }
+
+    this.randomWorkout = workout;
+  }
+
+  GetExercises(type: number): any {
+    return this.exercises.filter(x => x.type === type);
   }
 
   updateExercise(exercise: Exercise): void {
