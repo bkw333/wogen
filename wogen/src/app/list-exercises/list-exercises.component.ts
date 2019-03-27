@@ -50,7 +50,6 @@ export class ListExercisesComponent implements OnInit {
     ex.extreme = extreme;
     ex.equipment = equipment;
     this.exerciseService.post(ex).subscribe();
-    this.exercisesList.data.push(ex);
 
   }
 
@@ -61,19 +60,22 @@ export class ListExercisesComponent implements OnInit {
     type = +type;
     const time = 20;
     const rounds = 4;
-    const exercises = time / rounds;
-    const filteredExercises = this.GetExercises(type);
-    const workout = new Array<Exercise>();
+    const filteredExercises = this.GetFilteredExercises(type);
+    this.randomWorkout = this.GenerateWorkout(time, rounds, filteredExercises);
 
+  }
+
+  GenerateWorkout(time: number, rounds: number, filteredExercises: Array<Exercise>): Array<Exercise> {
+    const workout = Array<Exercise>();
+    const exercises = time / rounds;
     for (let i = 0; i < exercises - 1; i++) {
       const x = Math.floor(Math.random() * filteredExercises.length + 0);
       workout.push(filteredExercises[x]);
     }
+    return workout;
+  }F
 
-    this.randomWorkout = workout;
-  }
-
-  GetExercises(type: number): any {
+  GetFilteredExercises(type: number): any {
     return this.exercises.filter(x => x.type === type);
   }
 

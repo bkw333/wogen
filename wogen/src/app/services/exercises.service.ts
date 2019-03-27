@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Exercise } from '../exercise';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { Exercise } from '../exercise';
 })
 export class ExerciseService {
   public exercises = Array<any>();
+
 
   constructor(private client: HttpClient) { }
   url = 'https://localhost:5001/api/exercises';
@@ -23,7 +24,7 @@ export class ExerciseService {
 
   public delete(id: string): void {
     const url = `${this.url}/?id=${id}`;
-    this.client.delete(url).subscribe(data => {});
+    this.client.delete(url).subscribe(data => { });
   }
 
   public update(id: string): any {
