@@ -4,7 +4,7 @@ import { Exercise } from '../exercise';
 import { ExerciseService } from '../services/exercises.service';
 import { Observable } from 'rxjs';
 import { delay } from 'q';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-list-exercises',
@@ -14,6 +14,8 @@ import { MatSnackBar } from '@angular/material';
 export class ListExercisesComponent implements OnInit {
   canSendMessage: boolean;
   lastCreatedExercise: Exercise;
+  exercisesList = new MatTableDataSource([]);
+  displayedColumns: string[] = ['Type', 'Name', 'Area', 'Easy', 'Medium', 'Extreme', 'Equipment'];
 
   constructor(
     private exerciseService: ExerciseService,
@@ -33,6 +35,7 @@ export class ListExercisesComponent implements OnInit {
   loadExercises(): void {
     this.exerciseService.get().subscribe(data => {
       this.exercises = data;
+      this.exercisesList = new MatTableDataSource(data);
       console.log(data);
     });
   }
@@ -47,12 +50,15 @@ export class ListExercisesComponent implements OnInit {
     ex.extreme = extreme;
     ex.equipment = equipment;
     this.exerciseService.post(ex).subscribe();
+    this.exercisesList.data.push(ex);
+
   }
 
   GetWorkout(type: number) {
     if (!type) {
       type = 1;
     }
+    type = +type;
     const time = 20;
     const rounds = 4;
     const exercises = time / rounds;
