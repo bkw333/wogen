@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -8,6 +9,7 @@ import { Exercise } from '../exercise';
 })
 export class ExerciseService {
   public exercises = Array<any>();
+  public exercisesList = new MatTableDataSource([]);
 
 
   constructor(private client: HttpClient) { }
@@ -19,6 +21,7 @@ export class ExerciseService {
 
   public post(exercise: Exercise): Observable<any> {
     this.exercises.push(exercise);
+    this.exercisesList.data.push(exercise);
     return this.client.post(this.url, exercise);
   }
 

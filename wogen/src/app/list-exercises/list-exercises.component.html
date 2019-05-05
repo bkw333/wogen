@@ -1,43 +1,49 @@
-<p>Add your exercise to the pool</p>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="type" #type required>
-    <mat-hint align="start"><strong>1 = EMOM | 2 = AMRAP | 3 = Strength </strong> </mat-hint>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="name" #name required>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="area" #area required>
-    <mat-hint align="start"><strong>1 = Beine | 2 = Rücken | 3 = Brust | 4 = Schultern | 5 = Arme | 6 = Core </strong>
-    </mat-hint>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="reps for easy" #easy required>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="reps for medium" #medium required>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="reps for extreme" #extreme required>
-  </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="equipment" #equipment required>
-    <mat-hint align="start"><strong>0 = nein | 1 = benötigt </strong> </mat-hint>
-  </mat-form-field>
-</form>
+<mat-tab-group>
 
-<button mat-button
-  (click)="createExercise(type.value, name.value, area.value, easy.value, medium.value, extreme.value, equipment.value)">Add
-  exercise</button>
+  <mat-tab label="Create">
+    <p>Add your exercise to the pool</p>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="type" #type required>
+        <mat-hint align="start"><strong>1 = EMOM | 2 = AMRAP | 3 = Strength </strong> </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="name" #name required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="area" #area required>
+        <mat-hint align="start"><strong>1 = Beine | 2 = Rücken | 3 = Brust | 4 = Schultern | 5 = Arme | 6 = Core
+          </strong>
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="reps for easy" #easy required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="reps for medium" #medium required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="reps for extreme" #extreme required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="equipment" #equipment required>
+        <mat-hint align="start"><strong>0 = nein | 1 = benötigt </strong> </mat-hint>
+      </mat-form-field>
+    </form>
 
+    <button mat-button
+      (click)="createExercise(type.value, name.value, area.value, easy.value, medium.value, extreme.value, equipment.value)">Add
+      exercise</button>
+  </mat-tab>
+  <mat-table label="Get some!">
+    <h2>Give me something to do!</h2><button mat-button (click)="GetWorkout(wotype.value)">GET SOME!</button>
+    <input placeholder="type" #wotype required>
+    <h1 *ngIf="randomWorkout">Workout: EMOM - 20 Minutes</h1>
+    <h2 *ngFor="let e of randomWorkout">{{e.type}}-{{e.name}}: | Easy: {{e.easy}} Reps | Medium: {{e.medium}} Reps |
+      Extreme: {{e.extreme}} Reps |</h2>
 
-<h2>Give me something to do!</h2><button mat-button (click)="GetWorkout(wotype.value)">GET SOME!</button>
-<input placeholder="type" #wotype required>
-<h1 *ngIf="randomWorkout">Workout: EMOM - 20 Minutes</h1>
-<h2 *ngFor="let e of randomWorkout">{{e.type}}-{{e.name}}: | Easy: {{e.easy}} Reps | Medium: {{e.medium}} Reps |
-  Extreme: {{e.extreme}} Reps |</h2>
-<!-- 
+  </mat-table>
+  <!-- 
 <mat-card *ngFor="let e of exercises">
   <h3>
     <p *ngIf="e.type === 1">EMOM - {{e.name}}</p>
@@ -48,45 +54,48 @@
       (click)="this.updateExercise(e)">Update</button>
   </h3>
 </mat-card> -->
+  <mat-tab label="Overview">
+    <!-- implement delete for selected -->
+    <table mat-table [dataSource]="exercises">
+      <ng-container matColumnDef="Type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let exercise">
+          {{exercise.type === 1 ? "EMOM " : exercise.type === 2 ? "AMRAP " : "Strength "}}</td>
 
-<!-- implement delete for selected -->
-<table mat-table [dataSource]="exercises">
-    <ng-container matColumnDef="Type">
-      <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.type === 1 ? "EMOM " : exercise.type === 2 ? "AMRAP " : "Strength "}}</td>
+      </ng-container>
 
-    </ng-container>
-  
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.name}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Area">
-      <th mat-header-cell *matHeaderCellDef> Area </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.area}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Easy">
-      <th mat-header-cell *matHeaderCellDef> Easy </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.easy}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Medium">
-      <th mat-header-cell *matHeaderCellDef> Medium </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.medium}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Extreme">
-      <th mat-header-cell *matHeaderCellDef> Extreme </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.extreme}}</td>
-    </ng-container>
-  
-    <ng-container matColumnDef="Equipment">
-      <th mat-header-cell *matHeaderCellDef> Equipment </th>
-      <td mat-cell *matCellDef="let exercise"> {{exercise.equipment}}</td>
-    </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.name}}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <ng-container matColumnDef="Area">
+        <th mat-header-cell *matHeaderCellDef> Area </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.area}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Easy">
+        <th mat-header-cell *matHeaderCellDef> Easy </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.easy}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Medium">
+        <th mat-header-cell *matHeaderCellDef> Medium </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.medium}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Extreme">
+        <th mat-header-cell *matHeaderCellDef> Extreme </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.extreme}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Equipment">
+        <th mat-header-cell *matHeaderCellDef> Equipment </th>
+        <td mat-cell *matCellDef="let exercise"> {{exercise.equipment}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-tab>
+</mat-tab-group>

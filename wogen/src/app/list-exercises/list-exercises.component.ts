@@ -14,7 +14,6 @@ import { MatSnackBar, MatTableDataSource } from '@angular/material';
 export class ListExercisesComponent implements OnInit {
   canSendMessage: boolean;
   lastCreatedExercise: Exercise;
-  exercisesList = new MatTableDataSource([]);
   displayedColumns: string[] = ['Type', 'Name', 'Area', 'Easy', 'Medium', 'Extreme', 'Equipment'];
 
   constructor(
@@ -27,6 +26,7 @@ export class ListExercisesComponent implements OnInit {
 
   exercises: Array<any>;
   randomWorkout: any;
+  exercisesList = new MatTableDataSource([]);
 
   ngOnInit() {
     this.loadExercises();
@@ -35,8 +35,6 @@ export class ListExercisesComponent implements OnInit {
   loadExercises(): void {
     this.exerciseService.get().subscribe(data => {
       this.exercises = data;
-      this.exercisesList = new MatTableDataSource(data);
-      console.log(data);
     });
   }
 
@@ -49,8 +47,9 @@ export class ListExercisesComponent implements OnInit {
     ex.medium = medium;
     ex.extreme = extreme;
     ex.equipment = equipment;
-    this.exerciseService.post(ex).subscribe();
-
+    this.exerciseService.post(ex).subscribe(x => {
+      this.exercisesList = this.exerciseService.exercisesList;
+    });
   }
 
   GetWorkout(type: number) {
@@ -73,7 +72,7 @@ export class ListExercisesComponent implements OnInit {
       workout.push(filteredExercises[x]);
     }
     return workout;
-  }F
+  }
 
   GetFilteredExercises(type: number): any {
     return this.exercises.filter(x => x.type === type);
